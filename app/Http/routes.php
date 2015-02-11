@@ -12,10 +12,12 @@
 */
 
 Route::get('/', function() {
-    if(!Session::has('user')) {
-        return redirect()->route('api.v1.login.index');
-    }
+    if(!Session::has('user'))
+        return redirect()->route('login.index');
+    return 'ge0';
 });
+
+Route::resource('login', 'LoginController',['only' => ['index','store']]);
 
 
 /**
@@ -29,12 +31,8 @@ Route::group(['prefix' => 'api'], function()
         Route::resource('table','TablesController');
         Route::resource('jobtype','JobtypesController');
 
-        Route::resource('login', 'LoginController',['only' => ['index','store']]);
     });
 });
 
-Route::get('dashboard', function()
-{
-
-});
+Route::get('dashboard',['as' => 'dashboard', 'uses' => 'Dashboardcontroller']);
 
