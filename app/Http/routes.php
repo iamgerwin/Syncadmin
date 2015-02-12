@@ -19,7 +19,6 @@ Route::get('/', function() {
 
 Route::resource('login', 'LoginController',['only' => ['index','store']]);
 
-
 /**
    APIs
 */
@@ -30,9 +29,18 @@ Route::group(['prefix' => 'api'], function()
         Route::resource('machine','MachinesController');
         Route::resource('table','TablesController');
         Route::resource('jobtype','JobtypesController');
+        Route::resource('job','JobsController');
 
     });
 });
 
-Route::get('dashboard',['as' => 'dashboard', 'uses' => 'Dashboardcontroller']);
+Route::get('dashboard',['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 
+Route::group(['prefix' => 'setup'], function()
+{
+    Route::resource('machine','SetupMachineController',['only' => ['index','edit','create','show']]);
+    
+    Route::resource('table','SetupTableController',['only' => ['index','edit','create','show']]);
+    
+    Route::resource('jobtype','SetupJobtypeController',['only' => ['index','edit','create','show']]);
+});
